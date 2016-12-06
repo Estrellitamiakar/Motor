@@ -1,0 +1,126 @@
+/*          UNIVERSIDAD TÉCNICA DEL NORTE 
+                    FICA-CIERCOM
+              SISTEMAS MICROPROCESADOS
+            MONCAYO KARLA, YUCAZ ALVARO 
+                      16-11-2016
+                      
+Realizar la medición de velocidad (0-99) de un motor mediante la lectura de un converso análogo digital,
+recordar que deben realizar la conversión de 0-1023 a 0-99 para tener todas las referencias de voltaje.
+*/
+
+ int A=13;
+int B=12;
+int C=11;
+int D=10;
+int decenas=8;
+int unidades=9;
+int motor=6;
+int valor_potenciometro;
+int velocidad;
+int valor_unidad;
+int valor_decena;
+void setup() {
+  // put your setup code here, to run once:
+pinMode(A,OUTPUT);
+pinMode(B,OUTPUT);
+pinMode(C,OUTPUT);
+pinMode(D,OUTPUT);
+pinMode(unidades,OUTPUT);
+pinMode(decenas,OUTPUT);
+pinMode(motor,OUTPUT);
+}
+
+void loop() {
+valor_potenciometro=analogRead(0); //valor del potenciometro en el pin o analogico
+analogWrite(motor,(valor_potenciometro,0,860,0,99));
+//analogWrite(motor,(valor_potenciometro/4)); // escriba en el motor el valor del potenciometro
+velocidad=map(valor_potenciometro,0,860,0,99);
+//velocidad=map (valor_cad, 0, 860, 0, 99);
+valor_decena=velocidad/10;
+valor_unidad=velocidad-(valor_decena*10);
+
+digitalWrite(decenas,LOW);
+digitalWrite(unidades,HIGH);
+contador_display(valor_unidad);
+delay(200);
+
+digitalWrite(unidades,LOW);
+digitalWrite(decenas,HIGH);
+contador_display(valor_decena);
+delay(200);
+}
+void contador_display(int numero){
+    switch(numero){
+   case 0:  
+  //0
+   digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+    break;
+    case 1:
+  //1
+   digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+    break;
+    case 2:
+  //2
+   digitalWrite(A,LOW);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+    break;
+    case 3:
+  //3
+  digitalWrite(A,HIGH);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+    break;
+    case 4:
+  
+  //4
+   digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+    break;
+    case 5:
+  //5
+  digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+    break;
+    case 6:
+  //6
+  digitalWrite(A,LOW);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+    break;
+    case 7:
+  //7
+  digitalWrite(A,HIGH);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+    break;
+    case 8:
+  //8
+  digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,HIGH);
+    break;
+    case 9:
+  //9
+  digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,HIGH);
+
+    }
+}
